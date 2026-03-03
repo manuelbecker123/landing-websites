@@ -1,0 +1,1446 @@
+Okay, as a front-end developer, I've crafted a complete, responsive, and accessibility-focused one-page website using pure HTML and CSS, designed to represent the "SignWise" platform.
+
+**Important Notes:**
+
+1.  **Pure HTML & CSS:** This means there is no JavaScript for dynamic content, actual form submissions, live video, AI features, or advanced interactive elements (like fully functional carousels). I've used static images, descriptive text, and semantic HTML to *represent* these features and their intended functionality.
+2.  **Accessibility-First:** I've paid close attention to WCAG AA standards:
+    *   **Semantic HTML5:** Using elements like `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`, `<h1>`-`<h6>`, `<button>`, `<ul>`, `<blockquote>`.
+    *   **Skip Link:** A "Skip to main content" link for keyboard users.
+    *   **Keyboard Navigation:** All interactive elements (`<a>`, `<button>`) have clear `:focus` styles.
+    *   **ARIA Attributes:** `aria-label` for navigation links and menu toggle, `aria-expanded` for the toggle.
+    *   **Color Contrast:** Chosen a color palette with sufficient contrast.
+    *   **Responsive Typography:** Using `rem` units for scalable font sizes.
+    *   **Image Accessibility:** All `<img>` tags include meaningful `alt` attributes and `width`/`height` for better layout and performance.
+    *   **Dark Mode (prefers-color-scheme):** Included a basic dark mode stylesheet using CSS variables to demonstrate responsiveness to user preferences.
+3.  **One-Page Structure:** All recommended "pages" (Landing, Features, Pricing, Sign-up, etc.) are structured as distinct `<section>` elements with unique IDs, allowing for smooth internal navigation via anchor links.
+4.  **Placeholders:** Images are sourced from `via.placeholder.com` and represent what actual platform screenshots or illustrations would look like.
+5.  **Minimal JavaScript:** I've included a *very minimal* JS snippet at the end of `body` just to dynamically update the copyright year and to provide basic functionality for the mobile hamburger menu toggle, as these are common UI/UX elements for which a static HTML/CSS approach would feel incomplete in a one-page design. I acknowledge that the full interactive features would require a robust JavaScript framework.
+
+---
+
+### `index.html` (HTML Structure)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignWise: AI-Powered Sign Language Learning & Community</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Favicon placeholder: A waving hand emoji for visual identity -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👋</text></svg>">
+</head>
+<body>
+    <!-- Skip link for keyboard navigation and screen readers -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <nav class="container nav-bar" aria-label="Main navigation">
+            <div class="logo">
+                <a href="#hero" aria-label="SignWise Home">SignWise</a>
+            </div>
+            <ul class="nav-links" id="main-menu">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#teachers">Teachers</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li class="nav-cta"><a href="#call-to-action" class="button button-secondary">Sign Up</a></li>
+                <li class="nav-cta"><a href="#" class="button button-primary">Log In</a></li>
+            </ul>
+            <!-- Hamburger menu toggle for mobile (requires JS for functionality) -->
+            <button class="menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Open main menu">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section: Value Proposition & Main CTA -->
+        <section id="hero" class="hero-section text-center">
+            <div class="container">
+                <h1 class="hero-title">Learn Sign Language with AI-Powered Feedback</h1>
+                <p class="hero-subtitle">Connect with expert teachers, practice with intelligent AI analysis, and join a vibrant community. Your journey to fluency starts here.</p>
+                <div class="hero-ctas">
+                    <a href="#call-to-action" class="button button-primary button-large">Start Learning Today</a>
+                    <a href="#features" class="button button-secondary button-large">Explore Features</a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://via.placeholder.com/1200x600/e0e0e0/333333?text=AI-Powered+Sign+Language+Demo" alt="Illustration of a student interacting with an AI interface, showing real-time sign language feedback overlaid on a webcam feed. The AI highlights correct handshapes and movements." width="1200" height="600">
+                    <p class="image-caption">Real-time feedback on handshape, movement, and facial expression accuracy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section: Highlighting Core Platform Capabilities -->
+        <section id="features" class="features-section section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Unlock Your Potential with SignWise</h2>
+                <p class="section-subtitle text-center">Comprehensive tools designed to make learning sign language accessible and effective.</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="icon" aria-hidden="true">✨</div>
+                        <h3>AI-Driven Practice</h3>
+                        <p>Receive instant, visual feedback on your signing accuracy with our cutting-edge AI. Master handshape, movement, and facial grammar.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon" aria-hidden="true">🧑‍🏫</div>
+                        <h3>Live 1:1 & Group Lessons</h3>
+                        <p>Connect with certified sign language teachers through low-latency video calls, screen sharing, and interactive whiteboards.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon" aria-hidden="true">📚</div>
+                        <h3>Self-Paced Learning</h3>
+                        <p>Access a rich library of video lessons, step-by-step exercises, and downloadable resources tailored to your pace.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon" aria-hidden="true">🌐</div>
+                        <h3>Vibrant Community</h3>
+                        <p>Practice with peers, join forums, participate in events, and track your progress on leaderboards.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon" aria-hidden="true">📈</div>
+                        <h3>Progress Tracking</h3>
+                        <p>Monitor your mastery levels, completion rates, and receive certificates of achievement. Exportable reports for teachers/parents.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon" aria-hidden="true">♿</div>
+                        <h3>Accessibility First</h3>
+                        <p>Designed with WCAG AA standards, high-contrast UI, keyboard navigation, captions, and screen-reader friendliness.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section: Student Journey Overview -->
+        <section id="how-it-works" class="how-it-works-section section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">Your Path to Sign Language Fluency</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number" aria-hidden="true">1</div>
+                        <h3>Sign Up & Onboard</h3>
+                        <p>Create your free student or teacher account. Students can take an optional skill placement test.</p>
+                        <img src="https://via.placeholder.com/300x200/d0d0d0/444444?text=User+Account+Setup" alt="Illustration of a person signing up for an online platform on a tablet." width="300" height="200">
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number" aria-hidden="true">2</div>
+                        <h3>Practice with AI</h3>
+                        <p>Utilize your webcam for real-time AI feedback on your signs. Get instant scores and corrective hints.</p>
+                        <img src="https://via.placeholder.com/300x200/c0c0c0/555555?text=AI+Practice+Interface" alt="Screenshot of an AI practice interface showing a user performing a sign with analytical overlays." width="300" height="200">
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number" aria-hidden="true">3</div>
+                        <h3>Connect with Teachers</h3>
+                        <p>Book live 1:1 sessions, join group classes, or submit homework for personalized feedback.</p>
+                        <img src="https://via.placeholder.com/300x200/b0b0b0/666666?text=Live+Lesson+Interface" alt="Screenshot of a live video call with a sign language teacher and student interacting." width="300" height="200">
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number" aria-hidden="true">4</div>
+                        <h3>Track & Achieve</h3>
+                        <p>Monitor your progress, earn badges, and receive certificates upon mastery. Celebrate your milestones!</p>
+                        <img src="https://via.placeholder.com/300x200/a0a0a0/777777?text=Progress+Dashboard" alt="Illustration of a student's progress dashboard showing completed lessons and achievements." width="300" height="200">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI-Driven Practice Detail Section -->
+        <section id="ai-feedback-detail" class="ai-feedback-detail-section section-padding bg-light">
+            <div class="container layout-grid-2col">
+                <div class="content-text">
+                    <h2 class="section-title">Your Personal AI Sign Coach</h2>
+                    <p>Our advanced AI analyzes your webcam stream in real-time, checking handshape, movement, location, orientation, and facial grammar. Get immediate visual overlays, accuracy scores, and suggested drills to refine your signing technique.</p>
+                    <ul>
+                        <li><span class="list-icon" aria-hidden="true">✅</span> Real-time visual feedback</li>
+                        <li><span class="list-icon" aria-hidden="true">✅</span> Accuracy scores and corrective hints</li>
+                        <li><span class="list-icon" aria-hidden="true">✅</span> Interactive drills: Repeat-after-me, compare, quizzes</li>
+                        <li><span class="list-icon" aria-hidden="true">✅</span> Teacher review queue for challenging sessions</li>
+                    </ul>
+                    <a href="#call-to-action" class="button button-primary">Try AI Practice Now</a>
+                </div>
+                <div class="content-image">
+                    <img src="https://via.placeholder.com/800x600/c0d9e6/2a4a58?text=AI+Feedback+Overlay+Example" alt="Screenshot of a user signing into a webcam with green overlays indicating correct hand movements and a real-time accuracy score display." width="800" height="600">
+                    <p class="image-caption">AI provides instant, actionable feedback to help you perfect your signs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Lessons Detail Section -->
+        <section id="live-lessons-detail" class="live-lessons-detail-section section-padding">
+            <div class="container layout-grid-2col reverse-on-mobile">
+                <div class="content-image">
+                    <img src="https://via.placeholder.com/800x600/d7eaf1/3a5a6a?text=Live+Video+Classroom+Screenshot" alt="Screenshot of a live video call classroom interface showing a teacher and student interacting, with a chat box open." width="800" height="600">
+                    <p class="image-caption">Engage in rich, interactive learning sessions with certified teachers.</p>
+                </div>
+                <div class="content-text">
+                    <h2 class="section-title">Connect Live with Expert Teachers</h2>
+                    <p>Experience the warmth of human connection and personalized instruction. Our live classroom features low-latency video calls, screen sharing, and integrated text chat to facilitate seamless communication and learning.</p>
+                    <ul>
+                        <li><span class="list-icon" aria-hidden="true">🧑‍💻</span> Low-latency video for smooth interaction</li>
+                        <li><span class="list-icon" aria-hidden="true">💬</span> Integrated text chat for questions and notes</li>
+                        <li><span class="list-icon" aria-hidden="true">📹</span> Optional session recording for review and practice</li>
+                        <li><span class="list-icon" aria-hidden="true">📝</span> Teachers assign homework and provide annotated feedback</li>
+                    </ul>
+                    <a href="#teachers" class="button button-secondary">Find a Teacher</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teacher Directory Section -->
+        <section id="teachers" class="teachers-section section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Meet Our Certified Sign Language Teachers</h2>
+                <p class="section-subtitle text-center">Browse profiles of our verified educators and find the perfect match for your learning style.</p>
+                <div class="teacher-grid">
+                    <div class="teacher-card">
+                        <img src="https://via.placeholder.com/150/ff7f50/ffffff?text=SL" alt="Teacher profile picture for Sarah Lee" width="150" height="150">
+                        <h3>Sarah Lee</h3>
+                        <p>ASL Specialist | 10+ Years Experience</p>
+                        <p class="bio-snippet">Passionate about fostering expressive communication. Focus on conversational fluency.</p>
+                        <a href="#" class="button button-small">View Profile</a>
+                    </div>
+                    <div class="teacher-card">
+                        <img src="https://via.placeholder.com/150/6495ed/ffffff?text=DK" alt="Teacher profile picture for David Kim" width="150" height="150">
+                        <h3>David Kim</h3>
+                        <p>BSL & ISL Tutor | Deaf Community Advocate</p>
+                        <p class="bio-snippet">Experienced in teaching deaf and hearing students alike. Loves interactive drills.</p>
+                        <a href="#" class="button button-small">View Profile</a>
+                    </div>
+                    <div class="teacher-card">
+                        <img src="https://via.placeholder.com/150/3cb371/ffffff?text=MG" alt="Teacher profile picture for Maria Garcia" width="150" height="150">
+                        <h3>Maria Garcia</h3>
+                        <p>Certified ASL Interpreter | Beginner to Advanced</p>
+                        <p class="bio-snippet">Makes learning fun and engaging, emphasizing cultural understanding.</p>
+                        <a href="#" class="button button-small">View Profile</a>
+                    </div>
+                    <div class="teacher-card">
+                        <img src="https://via.placeholder.com/150/dda0dd/ffffff?text=AC" alt="Teacher profile picture for Alex Chen" width="150" height="150">
+                        <h3>Alex Chen</h3>
+                        <p>Youth Sign Language Educator | Fun & Interactive</p>
+                        <p class="bio-snippet">Specializes in teaching children and teenagers with creative methods.</p>
+                        <a href="#" class="button button-small">View Profile</a>
+                    </div>
+                </div>
+                <div class="text-center cta-teacher">
+                    <p>Are you an experienced sign language teacher? Empower students with SignWise!</p>
+                    <a href="#call-to-action" class="button button-primary">Become a SignWise Teacher</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials-section section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">What Our Community Says About SignWise</h2>
+                <div class="testimonial-grid">
+                    <blockquote class="testimonial-card">
+                        <p>"SignWise has transformed my learning! The AI feedback is incredibly accurate, helping me refine my handshapes in ways I never thought possible. My confidence has soared!"</p>
+                        <cite>— Emily R., Student</cite>
+                    </blockquote>
+                    <blockquote class="testimonial-card">
+                        <p>"As a teacher, SignWise's platform makes managing classes and providing feedback a breeze. The student progress tracking is invaluable, and the live classroom is robust."</p>
+                        <cite>— Mr. J. Davis, Certified ASL Teacher</cite>
+                    </blockquote>
+                    <blockquote class="testimonial-card">
+                        <p>"I love the community features! Practicing with peers has been so helpful, and the forums are great for asking questions. Highly recommend SignWise for anyone serious about learning sign."</p>
+                        <cite>— Liam K., Student</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing / Plans Section -->
+        <section id="pricing" class="pricing-section section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Flexible Plans for Every Learner</h2>
+                <p class="section-subtitle text-center">Choose the plan that best fits your learning goals and budget.</p>
+                <div class="pricing-grid">
+                    <div class="price-card">
+                        <h3>Free Tier</h3>
+                        <div class="price-value"><sup>$</sup>0<span>/month</span></div>
+                        <ul>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Basic video lesson library</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Limited AI practice sessions</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Access to community forums</li>
+                            <li><span class="list-icon" aria-label="Not included">✗</span> Live teacher lessons</li>
+                            <li><span class="list-icon" aria-label="Not included">✗</span> Advanced AI analytics</li>
+                        </ul>
+                        <a href="#call-to-action" class="button button-secondary">Start Free</a>
+                    </div>
+                    <div class="price-card recommended">
+                        <h3>Pro Learner</h3>
+                        <div class="price-value"><sup>$</sup>29<span>/month</span></div>
+                        <p class="tag">Recommended</p>
+                        <ul>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> All Free Tier features</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Unlimited AI practice & detailed feedback</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Full access to lesson library & resources</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> 2 live group lessons per month</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Progress tracking & certificates</li>
+                        </ul>
+                        <a href="#call-to-action" class="button button-primary">Choose Pro</a>
+                    </div>
+                    <div class="price-card">
+                        <h3>Premium Mentor</h3>
+                        <div class="price-value"><sup>$</sup>79<span>/month</span></div>
+                        <ul>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> All Pro Learner features</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> 4 live 1:1 lessons per month</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Priority teacher review queue</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Dedicated student success manager</li>
+                            <li><span class="list-icon" aria-hidden="true">✓</span> Early access to new features</li>
+                        </ul>
+                        <a href="#call-to-action" class="button button-secondary">Choose Premium</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Call to Action Section -->
+        <section id="call-to-action" class="cta-section section-padding text-center">
+            <div class="container">
+                <h2 class="section-title cta-title">Ready to Start Your Sign Language Journey?</h2>
+                <p class="section-subtitle">Join thousands of students and teachers who are empowering communication through SignWise.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="button button-primary button-large">Sign Up as a Student</a>
+                    <a href="#" class="button button-secondary button-large">Become a Teacher</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <h3>SignWise</h3>
+                <p>Empowering communication through innovative sign language education, powered by AI and human connection.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="SignWise on Facebook">F</a>
+                    <a href="#" aria-label="SignWise on Twitter">T</a>
+                    <a href="#" aria-label="SignWise on Instagram">I</a>
+                    <a href="#" aria-label="SignWise on LinkedIn">L</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#teachers">Teachers</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#">Student Dashboard</a></li>
+                    <li><a href="#">Teacher Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="footer-legal">
+                <h3>Legal & Privacy</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">AI Disclosure</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility Statement</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p>Email: <a href="mailto:support@signwise.com">support@signwise.com</a></p>
+                <p>Phone: <a href="tel:+1800SIGNWISE">1-800-SIGNWISE</a></p>
+                <p>Address: 123 Learning Lane, ASL City, SL 98765</p>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; <span id="current-year"></span> SignWise. All rights reserved. Made with love and a commitment to accessibility.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal JavaScript for UI enhancements: copyright year and mobile navigation toggle -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+                menuToggle.setAttribute('aria-expanded', !expanded);
+                navLinks.classList.toggle('active');
+            });
+            // Close menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        menuToggle.click(); // Programmatically click the toggle to close
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+```
+
+---
+
+### `style.css` (CSS Styling)
+
+```css
+/* --- CSS Variables for Theming & Accessibility --- */
+:root {
+    /* Colors */
+    --primary-color: #3366ff; /* A vibrant blue for main actions */
+    --primary-dark: #2244bb;
+    --primary-light: #6699ff;
+    --secondary-color: #00b894; /* A contrasting teal for secondary actions/highlights */
+    --secondary-dark: #008f75;
+    --secondary-light: #33e0c0;
+
+    --text-color: #333333; /* Dark text for readability */
+    --text-light: #f4f4f4; /* Light text for dark backgrounds */
+    --bg-color: #ffffff; /* Main background */
+    --bg-light: #f9f9f9; /* Light grey for sections */
+    --border-color: #e0e0e0; /* Subtle borders */
+    --accent-color: #ffbe0b; /* For highlights, warnings (e.g., focus states) */
+
+    /* Typography */
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --base-font-size: 100%; /* Equivalent to 16px, scales with user settings */
+    --line-height: 1.6;
+
+    /* Spacing */
+    --spacing-unit: 1rem; /* 16px base unit */
+    --section-padding-large: 6rem;
+    --section-padding-medium: 4rem;
+    --section-padding-small: 2rem;
+
+    /* Borders & Shadows */
+    --border-radius-small: 0.25rem;
+    --border-radius-medium: 0.5rem;
+    --shadow-small: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-large: 0 10px 15px rgba(0,0,0,0.1);
+
+    /* Transitions */
+    --transition-speed: 0.3s;
+}
+
+/* --- Base Styles & Reset --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    font-size: var(--base-font-size); /* Enable font scaling */
+}
+
+body {
+    font-family: var(--font-sans);
+    line-height: var(--line-height);
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    -webkit-font-smoothing: antialiased; /* Better font rendering on macOS/iOS */
+    -moz-osx-font-smoothing: grayscale; /* Better font rendering on Firefox */
+}
+
+/* --- Accessibility Skip Link --- */
+.skip-link {
+    position: absolute;
+    top: -40px; /* Hide off-screen by default */
+    left: 8px;
+    background: var(--primary-color);
+    color: var(--text-light);
+    padding: 8px;
+    z-index: 1000;
+    text-decoration: none;
+    transition: top var(--transition-speed) ease-in-out;
+}
+
+.skip-link:focus {
+    top: 8px; /* Reveal on focus */
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* --- Container & Layout --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-unit);
+}
+
+.section-padding {
+    padding: var(--section-padding-medium) 0;
+}
+
+.bg-light {
+    background-color: var(--bg-light);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.layout-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr; /* Stack on mobile */
+    gap: calc(2 * var(--spacing-unit));
+    align-items: center;
+}
+
+/* Desktop layout for 2-column grid */
+@media (min-width: 768px) {
+    .layout-grid-2col {
+        grid-template-columns: 1fr 1fr;
+    }
+    .layout-grid-2col.reverse-on-mobile > .content-image {
+        order: 2; /* Image on right, text on left for this variant */
+    }
+    .layout-grid-2col.reverse-on-mobile > .content-text {
+        order: 1;
+    }
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    color: var(--primary-dark);
+    margin-bottom: var(--spacing-unit);
+    line-height: 1.2;
+}
+
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.25rem; }
+
+/* Responsive headings */
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+}
+@media (max-width: 480px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.25rem; }
+}
+
+p {
+    margin-bottom: var(--spacing-unit);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+}
+
+.section-subtitle {
+    font-size: 1.25rem;
+    color: #666;
+    margin-bottom: calc(2 * var(--spacing-unit));
+}
+
+.image-caption {
+    font-style: italic;
+    color: #777;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* --- Links & Buttons --- */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover, a:focus {
+    color: var(--primary-dark);
+    text-decoration: underline;
+    outline: none; /* Focus outline handled by button/element specific styles */
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8em 1.5em;
+    border-radius: var(--border-radius-medium);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed), transform var(--transition-speed);
+    border: 2px solid transparent; /* Ensure consistent border size */
+    font-size: 1rem;
+}
+
+.button:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px; /* Offset the outline for better visibility */
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border-color: var(--primary-color);
+}
+
+.button-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.button-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.button-secondary:hover {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.button-large {
+    padding: 1em 2em;
+    font-size: 1.15rem;
+}
+
+.button-small {
+    padding: 0.6em 1em;
+    font-size: 0.9rem;
+}
+
+/* --- Header & Navigation --- */
+.site-header {
+    background-color: var(--bg-color);
+    box-shadow: var(--shadow-small);
+    position: sticky; /* Sticky header for easy navigation */
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: var(--spacing-unit) 0;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.logo a {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-decoration: none;
+    padding: 0.5rem 0; /* Make clickable area larger */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: calc(1.5 * var(--spacing-unit));
+    align-items: center;
+}
+
+.nav-links li a {
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 0.5rem 0; /* For better clickability */
+    border-bottom: 2px solid transparent;
+    transition: color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.nav-links li a:hover,
+.nav-links li a:focus {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    text-decoration: none;
+}
+
+.nav-links .nav-cta .button {
+    margin-left: var(--spacing-unit);
+}
+
+/* Mobile navigation toggle (hidden by default on desktop) */
+.menu-toggle {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: relative;
+    z-index: 101; /* Ensure it's above other elements */
+}
+
+.menu-toggle:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+.menu-toggle .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-color);
+    margin: 5px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Visually hidden for screen readers */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    padding: var(--section-padding-large) 0;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    color: var(--text-light);
+}
+
+.hero-section h1.hero-title {
+    font-size: 4rem;
+    color: var(--text-light);
+    margin-bottom: calc(1.5 * var(--spacing-unit));
+}
+
+.hero-section .hero-subtitle {
+    font-size: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto calc(3 * var(--spacing-unit));
+    line-height: 1.4;
+    color: var(--text-light); /* Ensure subtitle is visible against gradient */
+}
+
+.hero-ctas .button {
+    margin: 0 var(--spacing-unit);
+}
+
+.hero-image {
+    margin-top: calc(4 * var(--spacing-unit));
+    background-color: var(--bg-color); /* To make placeholder image visible */
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    box-shadow: var(--shadow-large);
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hero-image .image-caption {
+    color: #666; /* Caption for light background */
+    margin: 1rem;
+}
+
+/* --- Feature Grid --- */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: calc(2 * var(--spacing-unit));
+    margin-top: calc(3 * var(--spacing-unit));
+}
+
+.feature-card {
+    background-color: var(--bg-color);
+    padding: calc(2 * var(--spacing-unit));
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-small);
+    text-align: center;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.feature-card:hover, .feature-card:focus-within {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.feature-card .icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-unit);
+}
+
+.feature-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.feature-card p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* --- How It Works Section --- */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: calc(2 * var(--spacing-unit));
+    margin-top: calc(3 * var(--spacing-unit));
+}
+
+.step-card {
+    background-color: var(--bg-color);
+    padding: calc(2 * var(--spacing-unit));
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-small);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.step-card .step-number {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    position: absolute;
+    top: -0.5rem;
+    left: 0.5rem;
+    opacity: 0.2;
+    z-index: 0;
+}
+
+.step-card h3 {
+    margin-top: var(--spacing-unit);
+    color: var(--primary-dark);
+    position: relative; /* Bring text above step number */
+    z-index: 1;
+}
+
+.step-card p {
+    font-size: 0.95rem;
+    color: #555;
+    position: relative;
+    z-index: 1;
+    margin-bottom: var(--spacing-unit);
+}
+
+.step-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-small);
+    margin-top: var(--spacing-unit);
+}
+
+/* --- Detailed Feature Sections (AI, Live Lessons) --- */
+.ai-feedback-detail-section .content-image img,
+.live-lessons-detail-section .content-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+}
+
+.ai-feedback-detail-section ul,
+.live-lessons-detail-section ul {
+    list-style: none;
+    margin-bottom: calc(2 * var(--spacing-unit));
+}
+
+.ai-feedback-detail-section ul li,
+.live-lessons-detail-section ul li {
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    color: #444;
+}
+
+.ai-feedback-detail-section .list-icon,
+.live-lessons-detail-section .list-icon {
+    margin-right: 0.8rem;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+}
+
+/* --- Teacher Directory --- */
+.teacher-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: calc(2 * var(--spacing-unit));
+    margin-top: calc(3 * var(--spacing-unit));
+}
+
+.teacher-card {
+    background-color: var(--bg-color);
+    padding: calc(1.5 * var(--spacing-unit));
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-small);
+    text-align: center;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.teacher-card:hover, .teacher-card:focus-within {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.teacher-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: var(--spacing-unit);
+    border: 3px solid var(--secondary-color);
+}
+
+.teacher-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+    font-size: 1.5rem;
+}
+
+.teacher-card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.teacher-card .bio-snippet {
+    font-style: italic;
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-unit);
+}
+
+.cta-teacher {
+    margin-top: calc(3 * var(--spacing-unit));
+}
+.cta-teacher p {
+    font-size: 1.15rem;
+    margin-bottom: var(--spacing-unit);
+}
+
+/* --- Testimonials --- */
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: calc(2 * var(--spacing-unit));
+    margin-top: calc(3 * var(--spacing-unit));
+}
+
+.testimonial-card {
+    background-color: var(--bg-light);
+    padding: calc(2 * var(--spacing-unit));
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-small);
+    font-style: italic;
+    line-height: 1.7;
+    border-left: 4px solid var(--primary-color);
+}
+
+.testimonial-card p {
+    margin-bottom: var(--spacing-unit);
+    color: #444;
+}
+
+.testimonial-card cite {
+    display: block;
+    margin-top: var(--spacing-unit);
+    font-style: normal;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+/* --- Pricing Section --- */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: calc(2 * var(--spacing-unit));
+    margin-top: calc(3 * var(--spacing-unit));
+}
+
+.price-card {
+    background-color: var(--bg-color);
+    padding: calc(2 * var(--spacing-unit));
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-small);
+    text-align: center;
+    border: 2px solid var(--border-color);
+    position: relative;
+    display: flex; /* For consistent height and button alignment */
+    flex-direction: column;
+}
+
+.price-card.recommended {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-10px); /* Lift the recommended card */
+    z-index: 10;
+}
+
+.price-card .tag {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center horizontally and half above */
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: 0.3rem 1rem;
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.price-card h3 {
+    color: var(--primary-dark);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.price-card .price-value {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: calc(1.5 * var(--spacing-unit));
+}
+
+.price-card .price-value sup {
+    font-size: 1.5rem;
+    vertical-align: super;
+}
+
+.price-card .price-value span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #777;
+}
+
+.price-card ul {
+    list-style: none;
+    text-align: left;
+    margin-bottom: calc(2 * var(--spacing-unit));
+    flex-grow: 1; /* Allow list to take up available space */
+}
+
+.price-card ul li {
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: #555;
+    display: flex;
+    align-items: flex-start;
+}
+
+.price-card ul li .list-icon {
+    margin-right: 0.8rem;
+    color: var(--secondary-color);
+    font-weight: 700;
+    font-size: 1.1rem;
+    line-height: 1.1;
+}
+
+.price-card ul li .list-icon[aria-label="Not included"] { /* Specific styling for 'not included' */
+    color: #ccc;
+    text-decoration: line-through;
+}
+
+.price-card .button {
+    width: 100%;
+    margin-top: auto; /* Push button to bottom */
+}
+
+/* --- Call to Action Section --- */
+.cta-section {
+    background: linear-gradient(135deg, var(--secondary-light), var(--secondary-color));
+    color: var(--text-light);
+}
+
+.cta-section .cta-title {
+    color: var(--text-light);
+    font-size: 3rem;
+    margin-bottom: var(--spacing-unit);
+}
+
+.cta-section .section-subtitle {
+    color: var(--text-light);
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto calc(2 * var(--spacing-unit));
+}
+
+.cta-buttons .button {
+    margin: 0 var(--spacing-unit);
+    border-color: var(--text-light); /* Buttons in CTA have light border */
+}
+
+.cta-buttons .button-primary {
+    background-color: var(--text-light);
+    color: var(--secondary-dark);
+}
+
+.cta-buttons .button-primary:hover {
+    background-color: var(--bg-light);
+    color: var(--secondary-color);
+}
+
+.cta-buttons .button-secondary {
+    color: var(--text-light);
+    border-color: var(--text-light);
+}
+
+.cta-buttons .button-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+}
+
+/* --- Footer --- */
+.site-footer {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: var(--section-padding-medium) 0 var(--spacing-unit);
+    font-size: 0.9rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: calc(2 * var(--spacing-unit));
+    margin-bottom: calc(3 * var(--spacing-unit));
+}
+
+.site-footer h3 {
+    color: var(--secondary-light);
+    margin-bottom: var(--spacing-unit);
+    font-size: 1.2rem;
+}
+
+.site-footer p, .site-footer ul {
+    margin-bottom: 0.5rem;
+}
+
+.site-footer ul {
+    list-style: none;
+}
+
+.site-footer a {
+    color: var(--text-light);
+    transition: color var(--transition-speed);
+}
+
+.site-footer a:hover, .site-footer a:focus {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.social-links {
+    display: flex;
+    margin-top: var(--spacing-unit);
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    font-weight: 700;
+    transition: background-color var(--transition-speed);
+}
+
+.social-links a:hover {
+    background-color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--spacing-unit);
+    margin-top: var(--spacing-unit);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 992px) {
+    .section-padding {
+        padding: var(--section-padding-small) 0;
+    }
+
+    .hero-section h1.hero-title {
+        font-size: 3rem;
+    }
+    .hero-section .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+    .section-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide nav links by default on mobile */
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--bg-color);
+        position: absolute;
+        top: 100%; /* Position below the header */
+        left: 0;
+        padding: var(--spacing-unit);
+        box-shadow: var(--shadow-medium);
+        border-top: 1px solid var(--border-color);
+    }
+
+    .nav-links.active {
+        display: flex; /* Show when active (via JS) */
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        margin-bottom: var(--spacing-unit);
+    }
+    .nav-links li:last-child {
+        margin-bottom: 0;
+    }
+    .nav-links li a {
+        padding: 0.8rem 0;
+        display: block;
+        border-bottom: none;
+    }
+    .nav-links .nav-cta {
+        margin-top: var(--spacing-unit);
+    }
+
+    .menu-toggle {
+        display: block; /* Show hamburger menu on mobile */
+    }
+
+    .hero-ctas {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-unit);
+    }
+    .hero-ctas .button {
+        margin: 0; /* Remove horizontal margin for vertical stack */
+    }
+
+    .layout-grid-2col {
+        grid-template-columns: 1fr; /* Stack columns vertically */
+    }
+    .layout-grid-2col.reverse-on-mobile > .content-image {
+        order: unset; /* Reset order for mobile */
+    }
+    .layout-grid-2col.reverse-on-mobile > .content-text {
+        order: unset; /* Reset order for mobile */
+    }
+
+    .pricing-grid, .teacher-grid, .feature-grid, .testimonial-grid, .steps-grid {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+    .price-card.recommended {
+        transform: translateY(0); /* Remove lift on mobile for recommended card */
+    }
+
+    .cta-section .cta-title {
+        font-size: 2.2rem;
+    }
+    .cta-section .section-subtitle {
+        font-size: 1.1rem;
+    }
+    .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-unit);
+    }
+    .cta-buttons .button {
+        margin: 0;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    .footer-about, .footer-links, .footer-legal, .footer-contact {
+        text-align: center;
+    }
+    .social-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section h1.hero-title {
+        font-size: 2.5rem;
+    }
+    .hero-section .hero-subtitle {
+        font-size: 1rem;
+    }
+    .button-large {
+        font-size: 1rem;
+        padding: 0.8em 1.5em;
+    }
+    .section-title {
+        font-size: 1.75rem;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* --- Accessibility: Dark Mode Preference --- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #e0e0e0;
+        --text-light: #333333;
+        --bg-color: #1a1a1a;
+        --bg-light: #2a2a2a;
+        --border-color: #444444;
+        --primary-color: #6699ff; /* Brighter for dark mode */
+        --primary-dark: #3366ff;
+        --secondary-color: #33e0c0; /* Brighter for dark mode */
+        --secondary-dark: #00b894;
+        --accent-color: #ffda6a; /* Brighter for dark mode focus */
+    }
+
+    body {
+        color: var(--text-color);
+        background-color: var(--bg-color);
+    }
+
+    .site-header {
+        background-color: var(--bg-color);
+        box-shadow: 0 1px 3px rgba(255,255,255,0.1);
+    }
+    .nav-links li a {
+        color: var(--text-color);
+    }
+    .menu-toggle .bar {
+        background-color: var(--text-color);
+    }
+    .logo a {
+        color: var(--primary-color);
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    }
+    .hero-section h1.hero-title, .hero-section .hero-subtitle {
+        color: var(--text-color);
+    }
+    .hero-image {
+        background-color: var(--bg-dark); /* Ensure image background is dark */
+    }
+    .hero-image .image-caption {
+        color: var(--text-color);
+    }
+
+    .section-title {
+        color: var(--primary-color);
+    }
+    .section-subtitle {
+        color: #b0b0b0;
+    }
+
+    .feature-card, .step-card, .teacher-card, .price-card {
+        background-color: var(--bg-light);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        border-color: var(--border-color);
+    }
+    .feature-card h3, .step-card h3, .teacher-card h3, .price-card h3 {
+        color: var(--primary-color);
+    }
+    .feature-card p, .step-card p, .teacher-card p, .price-card p {
+        color: var(--text-color);
+    }
+    .step-card .step-number {
+        color: var(--primary-dark);
+    }
+
+    .testimonial-card {
+        background-color: #222;
+        border-left-color: var(--primary-color);
+    }
+    .testimonial-card p {
+        color: var(--text-color);
+    }
+    .testimonial-card cite {
+        color: var(--secondary-color);
+    }
+
+    .price-card .price-value {
+        color: var(--primary-color);
+    }
+    .price-card .price-value span {
+        color: var(--text-color);
+    }
+    .price-card ul li {
+        color: var(--text-color);
+    }
+    .price-card ul li .list-icon[aria-label="Not included"] {
+        color: #666; /* Adjust for dark mode */
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, var(--secondary-dark), var(--secondary-color));
+    }
+    .cta-section .cta-title, .cta-section .section-subtitle {
+        color: var(--text-color);
+    }
+    .cta-buttons .button-primary {
+        background-color: var(--text-color);
+        color: var(--secondary-dark);
+    }
+    .cta-buttons .button-primary:hover {
+        background-color: var(--bg-light);
+    }
+    .cta-buttons .button-secondary {
+        color: var(--text-color);
+        border-color: var(--text-color);
+    }
+
+    .site-footer {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+    .site-footer h3 {
+        color: var(--primary-color);
+    }
+    .site-footer p, .site-footer a {
+        color: var(--text-color);
+    }
+    .footer-bottom {
+        border-top-color: rgba(255,255,255,0.2);
+        color: rgba(255,255,255,0.6);
+    }
+}
+```

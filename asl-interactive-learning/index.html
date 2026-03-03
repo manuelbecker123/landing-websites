@@ -1,0 +1,978 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An interactive sign language learning platform with AI-powered gesture recognition, live classes, and personalized feedback.">
+    <meta name="keywords" content="sign language, ASL, BSL, learning, AI, gesture recognition, online classes, accessibility">
+    <meta name="author" content="SignFlow Team">
+    <title>SignFlow - Master Sign Language with AI-Powered Feedback</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Blob animation for Hero section */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 7s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
+        /* Custom styles for FAQ accordion smooth height transition */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            will-change: max-height; /* Performance hint */
+        }
+        .faq-answer.active {
+            padding-top: 1rem; /* pt-4 in Tailwind */
+            padding-bottom: 1rem; /* pb-4 in Tailwind */
+        }
+
+        /* Focus visible for accessibility, enhancing Tailwind's default */
+        *:focus-visible {
+            outline: 2px solid theme('colors.purple.500');
+            outline-offset: 2px;
+            border-radius: theme('borderRadius.md');
+        }
+
+        /* Navbar active link highlighting */
+        .nav-link.active, .mobile-nav-link.active {
+            @apply text-purple-600 font-semibold;
+            position: relative;
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            width: 8px;
+            height: 8px;
+            background-color: theme('colors.purple.600');
+            border-radius: 50%;
+            transform: translateX(-50%);
+            @apply transition-all duration-300 ease-in-out;
+        }
+        @media (max-width: 767px) { /* Adjust for mobile menu */
+            .mobile-nav-link.active::after {
+                left: 1rem; /* Align indicator to left of mobile link */
+                bottom: 0; /* Adjust vertical position */
+                transform: translateX(0) translateY(50%);
+            }
+        }
+
+
+        /* Back to top button - for smooth opacity transition */
+        #back-to-top {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        #back-to-top.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+        }
+
+        /* Prevent flicker during mobile menu transition */
+        .mobile-menu-overlay {
+            transition: opacity 0.3s ease-out;
+        }
+        .mobile-menu {
+            transition: transform 0.3s ease-out;
+        }
+        .mobile-menu-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .mobile-menu-overlay:not(.hidden) .mobile-menu {
+            transform: translateX(0);
+        }
+        .mobile-menu-overlay.hidden .mobile-menu {
+            transform: translateX(100%);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 leading-relaxed">
+
+    <!-- Sticky Navbar -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm backdrop-blur-md bg-opacity-80">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="#home" class="flex items-center space-x-2 text-2xl font-bold text-purple-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 21v-3.5c0-.8.7-1.5 1.5-1.5h7c.8 0 1.5.7 1.5 1.5V21"></path>
+                    <path d="M12 11c-2.8 0-5 2.2-5 5h10c0-2.8-2.2-5-5-5z"></path>
+                    <path d="M12 11V3"></path>
+                    <path d="M18 6l-6-3-6 3"></path>
+                </svg>
+                <span>SignFlow</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <ul class="hidden md:flex space-x-8 text-lg">
+                <li><a href="#home" class="nav-link text-gray-700 hover:text-purple-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-2 py-1">Home</a></li>
+                <li><a href="#features" class="nav-link text-gray-700 hover:text-purple-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-2 py-1">Features</a></li>
+                <li><a href="#how" class="nav-link text-gray-700 hover:text-purple-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-2 py-1">How It Works</a></li>
+                <li><a href="#pricing" class="nav-link text-gray-700 hover:text-purple-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-2 py-1">Pricing</a></li>
+                <li><a href="#testimonials" class="nav-link text-gray-700 hover:text-purple-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-2 py-1">Testimonials</a></li>
+                <li><a href="#faq" class="nav-link text-gray-700 hover:text-purple-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-2 py-1">FAQ</a></li>
+                <li><a href="#contact" class="nav-link text-gray-700 hover:text-purple-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-2 py-1">Contact</a></li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500" aria-label="Open mobile menu" aria-controls="mobile-menu" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black bg-opacity-50 z-50 hidden md:hidden" aria-hidden="true">
+            <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white shadow-lg p-6 transform translate-x-full overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 id="mobile-menu-title" class="text-2xl font-bold text-purple-600">SignFlow</h2>
+                    <button id="mobile-menu-close-button" class="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500" aria-label="Close mobile menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <ul class="flex flex-col space-y-4 text-xl">
+                    <li><a href="#home" class="mobile-nav-link block p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500">Home</a></li>
+                    <li><a href="#features" class="mobile-nav-link block p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500">Features</a></li>
+                    <li><a href="#how" class="mobile-nav-link block p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500">How It Works</a></li>
+                    <li><a href="#pricing" class="mobile-nav-link block p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500">Pricing</a></li>
+                    <li><a href="#testimonials" class="mobile-nav-link block p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500">Testimonials</a></li>
+                    <li><a href="#faq" class="mobile-nav-link block p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500">FAQ</a></li>
+                    <li><a href="#contact" class="mobile-nav-link block p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative overflow-hidden py-16 md:py-24 bg-gradient-to-br from-indigo-50 to-purple-50">
+            <div class="absolute inset-0 z-0 opacity-50">
+                <div class="absolute top-0 left-0 w-32 h-32 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                <div class="absolute bottom-0 left-1/4 w-32 h-32 bg-teal-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+            </div>
+            <div class="container mx-auto px-4 relative z-10 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-gray-900 mb-6 max-w-4xl mx-auto">
+                    Master Sign Language with <span class="text-purple-600">AI-Powered Feedback</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-700 mb-10 max-w-3xl mx-auto">
+                    Connect with expert teachers, learn at your own pace, and get instant, corrective feedback on your signing gestures. Your journey to fluency starts here.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#pricing" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-gradient-to-br from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 focus-visible:ring-opacity-50" aria-label="Start your free trial">
+                        Start Your Free Trial
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                    <a href="#features" class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-full shadow-sm text-gray-700 bg-white hover:bg-gray-50 transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 focus-visible:ring-opacity-50" aria-label="Explore features">
+                        Explore Features
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof Strip -->
+        <section class="py-12 bg-gray-100">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-lg md:text-xl font-semibold text-gray-600 mb-8">Trusted by leading educators and learners worldwide</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-center max-w-5xl mx-auto">
+                    <span class="text-gray-500 text-2xl font-bold opacity-75">EducateU</span>
+                    <span class="text-gray-500 text-2xl font-bold opacity-75">SkillHub</span>
+                    <span class="text-gray-500 text-2xl font-bold opacity-75">GlobalSign</span>
+                    <span class="text-gray-500 text-2xl font-bold opacity-75">LearnNow</span>
+                    <span class="text-gray-500 text-2xl font-bold opacity-75 hidden lg:block">FutureEd</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-4">Unlock Your Potential with SignFlow</h2>
+                <p class="text-lg text-center text-gray-700 mb-12 max-w-2xl mx-auto">
+                    Our platform offers innovative tools and a supportive community to help you master sign language efficiently and effectively.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature Card 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="p-4 rounded-full bg-purple-100 text-purple-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-1.75-3M3 13h18M12 5v14"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2m-4-8H3m18 0h-4M5.62 5.62l1.42 1.42m12.76 0l-1.42 1.42M6.34 18.66l-1.42-1.42m12.76 0l1.42-1.42"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">AI-Powered Gesture Recognition</h3>
+                        <p class="text-gray-600">Get instant, accurate feedback on your signing with our advanced AI. Understand where you need to improve with visual cues and scores.</p>
+                    </div>
+
+                    <!-- Feature Card 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="p-4 rounded-full bg-indigo-100 text-indigo-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 7h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Live Classes & 1:1 Sessions</h3>
+                        <p class="text-gray-600">Connect with certified sign language teachers in real-time. Join group lessons or schedule personalized coaching for rapid progress.</p>
+                    </div>
+
+                    <!-- Feature Card 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="p-4 rounded-full bg-teal-100 text-teal-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v14L9 19zm0 0v-5m6 0v5m-6-5h6"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 6l-6 3m-6 0l-6-3m0 0v14m0 0l6-3m6 3l6-3m0 0v-14"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Personalized Practice Plans</h3>
+                        <p class="text-gray-600">Receive custom practice plans tailored to your learning style and progress. Our adaptive system ensures you're always challenged appropriately.</p>
+                    </div>
+
+                    <!-- Feature Card 4 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="p-4 rounded-full bg-rose-100 text-rose-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Searchable Sign Library</h3>
+                        <p class="text-gray-600">Access a vast, searchable library of sign videos and lessons. Never miss a sign, with detailed glosses and examples at your fingertips.</p>
+                    </div>
+
+                    <!-- Feature Card 5 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="p-4 rounded-full bg-orange-100 text-orange-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Teacher-Led Review & Feedback</h3>
+                        <p class="text-gray-600">Submit practice videos for review by certified teachers. Get in-depth feedback, annotations, and guidance beyond what AI can offer.</p>
+                    </div>
+
+                    <!-- Feature Card 6 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="p-4 rounded-full bg-green-100 text-green-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Progress Tracking & Gamification</h3>
+                        <p class="text-gray-600">Monitor your learning path, earn badges, and celebrate milestones. Stay motivated with clear progress reports and engagement analytics.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-4">How SignFlow Works in 3 Simple Steps</h2>
+                <p class="text-lg text-center text-gray-700 mb-12 max-w-2xl mx-auto">
+                    Learning sign language has never been this intuitive and effective. Follow our guided process to fluency.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start max-w-6xl mx-auto">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center p-6 rounded-xl bg-white shadow-md border border-gray-100">
+                        <div class="relative mb-6">
+                            <div class="absolute -top-4 -left-4 w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center text-xl font-bold text-purple-800 shadow-md">1</div>
+                            <div class="p-5 rounded-full bg-purple-100 text-purple-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">1. Learn & Explore</h3>
+                        <p class="text-gray-600">Dive into our extensive library of video lessons, signs, and glosses. Join live classes with experienced teachers or follow a self-paced curriculum.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center p-6 rounded-xl bg-white shadow-md border border-gray-100">
+                        <div class="relative mb-6">
+                            <div class="absolute -top-4 -left-4 w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center text-xl font-bold text-indigo-800 shadow-md">2</div>
+                            <div class="p-5 rounded-full bg-indigo-100 text-indigo-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 7h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">2. Practice & Get Feedback</h3>
+                        <p class="text-gray-600">Record your signing through our app. Our AI instantly analyzes your gestures, providing accurate feedback, scores, and corrective tips. Submit to teachers for detailed review.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center p-6 rounded-xl bg-white shadow-md border border-gray-100">
+                        <div class="relative mb-6">
+                            <div class="absolute -top-4 -left-4 w-12 h-12 bg-teal-200 rounded-full flex items-center justify-center text-xl font-bold text-teal-800 shadow-md">3</div>
+                            <div class="p-5 rounded-full bg-teal-100 text-teal-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v14L9 19zm0 0v-5m6 0v5m-6-5h6"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 6l-6 3m-6 0l-6-3m0 0v14m0 0l6-3m6 3l6-3m0 0v-14"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">3. Track & Progress</h3>
+                        <p class="text-gray-600">Monitor your learning journey with detailed progress reports. Achieve milestones, earn badges, and see your fluency grow with every session.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-4">Flexible Plans for Every Learner</h2>
+                <p class="text-lg text-center text-gray-700 mb-12 max-w-2xl mx-auto">
+                    Choose the plan that fits your learning goals, from beginner to advanced. Unlock premium features and accelerate your sign language journey.
+                </p>
+
+                <!-- Pricing Toggle -->
+                <div class="flex justify-center mb-10">
+                    <div class="relative flex items-center p-1 bg-gray-200 rounded-full cursor-pointer focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-opacity-50">
+                        <button id="monthly-toggle" class="relative z-10 w-32 py-2 text-center rounded-full text-sm font-medium focus-visible:outline-none transition-colors duration-300" aria-pressed="true">Monthly</button>
+                        <button id="annual-toggle" class="relative z-10 w-32 py-2 text-center rounded-full text-sm font-medium focus-visible:outline-none transition-colors duration-300" aria-pressed="false">Annual <span class="text-xs bg-purple-600 text-white rounded-full px-2 py-0.5 ml-1">20% Off</span></button>
+                        <div id="pricing-toggle-slider" class="absolute h-full w-1/2 bg-purple-600 rounded-full shadow-md transform transition-transform duration-300 ease-in-out"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Pricing Card 1: Basic -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col hover:shadow-xl transition-shadow duration-300">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Basic</h3>
+                        <p class="text-gray-600 mb-6">Ideal for beginners taking their first steps.</p>
+                        <div class="flex items-baseline mb-6">
+                            <span class="text-5xl font-extrabold text-purple-600 mr-2">$<span class="price-value" data-monthly="19" data-annual="15">19</span></span>
+                            <span class="text-xl font-medium text-gray-500">/ month</span>
+                        </div>
+                        <ul class="space-y-3 text-gray-700 mb-8 flex-grow">
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                Access to basic sign library
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                Limited AI feedback sessions
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                Progress tracking
+                            </li>
+                            <li class="flex items-center text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                No live classes
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 bg-purple-100 text-purple-600 rounded-full font-semibold hover:bg-purple-200 transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 focus-visible:ring-opacity-50" aria-label="Choose Basic plan">Get Started</button>
+                    </div>
+
+                    <!-- Pricing Card 2: Pro (Recommended) -->
+                    <div class="bg-white p-8 rounded-xl shadow-xl border-2 border-purple-600 flex flex-col scale-105 transform">
+                        <div class="relative mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Pro</h3>
+                            <span class="absolute top-0 -right-2 px-3 py-1 bg-purple-600 text-white text-xs font-semibold rounded-full transform rotate-3">Popular</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">For serious learners ready to accelerate their fluency.</p>
+                        <div class="flex items-baseline mb-6">
+                            <span class="text-5xl font-extrabold text-purple-600 mr-2">$<span class="price-value" data-monthly="39" data-annual="31">39</span></span>
+                            <span class="text-xl font-medium text-gray-500">/ month</span>
+                        </div>
+                        <ul class="space-y-3 text-gray-700 mb-8 flex-grow">
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                <span class="font-semibold">Unlimited</span> sign library access
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                <span class="font-semibold">Unlimited</span> AI feedback
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                <span class="font-semibold">2 live group classes</span> / month
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                <span class="font-semibold">Teacher video reviews</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                Personalized practice plans
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 focus-visible:ring-opacity-50" aria-label="Choose Pro plan">Choose Pro Plan</button>
+                    </div>
+
+                    <!-- Pricing Card 3: Premium -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col hover:shadow-xl transition-shadow duration-300">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Premium</h3>
+                        <p class="text-gray-600 mb-6">The ultimate experience for dedicated learners and professionals.</p>
+                        <div class="flex items-baseline mb-6">
+                            <span class="text-5xl font-extrabold text-purple-600 mr-2">$<span class="price-value" data-monthly="79" data-annual="63">79</span></span>
+                            <span class="text-xl font-medium text-gray-500">/ month</span>
+                        </div>
+                        <ul class="space-y-3 text-gray-700 mb-8 flex-grow">
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                Everything in Pro
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                <span class="font-semibold">Unlimited live group classes</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                <span class="font-semibold">2x 1:1 sessions</span> / month
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                Priority support
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                Early access to new features
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 bg-purple-100 text-purple-600 rounded-full font-semibold hover:bg-purple-200 transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 focus-visible:ring-opacity-50" aria-label="Choose Premium plan">Go Premium</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-16 md:py-24 bg-gradient-to-br from-purple-50 to-indigo-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-4">What Our Learners Are Saying</h2>
+                <p class="text-lg text-center text-gray-700 mb-12 max-w-2xl mx-auto">
+                    Hear from students who transformed their sign language skills with SignFlow.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Testimonial Card 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="w-20 h-20 rounded-full bg-purple-200 text-purple-800 flex items-center justify-center text-3xl font-bold mb-4" aria-hidden="true">JD</div>
+                        <p class="text-gray-700 text-lg italic mb-4">"SignFlow's AI feedback is a game-changer! I finally feel confident that I'm signing correctly. My progress has been incredible."</p>
+                        <p class="font-semibold text-gray-900">John Doe</p>
+                        <p class="text-sm text-gray-500">Student, Beginner ASL</p>
+                    </div>
+
+                    <!-- Testimonial Card 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="w-20 h-20 rounded-full bg-indigo-200 text-indigo-800 flex items-center justify-center text-3xl font-bold mb-4" aria-hidden="true">AS</div>
+                        <p class="text-gray-700 text-lg italic mb-4">"The live classes are fantastic, and having a real teacher review my videos has pushed my learning further than I thought possible."</p>
+                        <p class="font-semibold text-gray-900">Anna Smith</p>
+                        <p class="text-sm text-gray-500">Student, Intermediate BSL</p>
+                    </div>
+
+                    <!-- Testimonial Card 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="w-20 h-20 rounded-full bg-teal-200 text-teal-800 flex items-center justify-center text-3xl font-bold mb-4" aria-hidden="true">MK</div>
+                        <p class="text-gray-700 text-lg italic mb-4">"As a teacher, SignFlow makes it easy to manage my students and provide targeted feedback. The AI helps pre-screen submissions, saving me time!"</p>
+                        <p class="font-semibold text-gray-900">Dr. Maya Khan</p>
+                        <p class="text-sm text-gray-500">Sign Language Instructor</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 max-w-3xl">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <p class="text-lg text-center text-gray-700 mb-12 max-w-2xl mx-auto">
+                    Find answers to common questions about SignFlow, our features, and how to get started.
+                </p>
+
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item border border-gray-200 rounded-lg bg-gray-50 shadow-sm overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-lg font-semibold text-left text-gray-800 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-lg" aria-expanded="false" aria-controls="faq-answer-1">
+                            <span>What sign languages does SignFlow support?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="faq-answer-1" class="faq-answer text-gray-700 px-6 pb-4">
+                            <p>Currently, SignFlow primarily supports American Sign Language (ASL) and British Sign Language (BSL). We are continuously working to expand our support to include more sign languages globally. Our AI models are trained on diverse datasets to ensure accuracy.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item border border-gray-200 rounded-lg bg-gray-50 shadow-sm overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-lg font-semibold text-left text-gray-800 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-lg" aria-expanded="false" aria-controls="faq-answer-2">
+                            <span>How accurate is the AI gesture recognition?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="faq-answer-2" class="faq-answer text-gray-700 px-6 pb-4">
+                            <p>Our AI uses advanced machine learning models for pose and hand tracking, providing highly accurate, real-time feedback. It identifies key sign components and offers corrective tips. While highly effective, it's designed to augment, not replace, human teacher feedback for nuances.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item border border-gray-200 rounded-lg bg-gray-50 shadow-sm overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-lg font-semibold text-left text-gray-800 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-lg" aria-expanded="false" aria-controls="faq-answer-3">
+                            <span>Can I use SignFlow on my mobile device?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="faq-answer-3" class="faq-answer text-gray-700 px-6 pb-4">
+                            <p>Absolutely! SignFlow is built with a mobile-first approach and is fully responsive. You can access all features, including live classes and AI practice, directly from your smartphone or tablet browser. We are also working on dedicated mobile apps.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item border border-gray-200 rounded-lg bg-gray-50 shadow-sm overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-lg font-semibold text-left text-gray-800 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-lg" aria-expanded="false" aria-controls="faq-answer-4">
+                            <span>What if I need personalized teacher support?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="faq-answer-4" class="faq-answer text-gray-700 px-6 pb-4">
+                            <p>Our Pro and Premium plans include access to live group classes and direct video review from certified teachers. Premium plans even offer one-on-one sessions for highly personalized instruction and feedback. Our teachers are here to guide you every step of the way.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 max-w-2xl">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-4">Get in Touch</h2>
+                <p class="text-lg text-center text-gray-700 mb-12 max-w-2xl mx-auto">
+                    Have questions or need support? Send us a message, and our friendly team will get back to you promptly.
+                </p>
+
+                <form id="contact-form" class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                        <input type="text" id="name" name="name" required class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm" aria-required="true">
+                        <p class="text-sm text-red-600 mt-1 hidden" id="name-error">Name is required.</p>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" id="email" name="email" required class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm" aria-required="true">
+                        <p class="text-sm text-red-600 mt-1 hidden" id="email-error">Please enter a valid email address.</p>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" required class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm" aria-required="true"></textarea>
+                        <p class="text-sm text-red-600 mt-1 hidden" id="message-error">Message is required.</p>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-full text-white bg-purple-600 hover:bg-purple-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 focus-visible:ring-opacity-50 transition-colors">
+                            Send Message
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="form-success-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative hidden" role="alert">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">Your message has been sent. We'll get back to you soon.</span>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-full md:col-span-1">
+                <a href="#home" class="flex items-center space-x-2 text-2xl font-bold text-purple-400 mb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 21v-3.5c0-.8.7-1.5 1.5-1.5h7c.8 0 1.5.7 1.5 1.5V21"></path>
+                        <path d="M12 11c-2.8 0-5 2.2-5 5h10c0-2.8-2.2-5-5-5z"></path>
+                        <path d="M12 11V3"></path>
+                        <path d="M18 6l-6-3-6 3"></path>
+                    </svg>
+                    <span>SignFlow</span>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed">Master sign language with AI-powered feedback and live teacher support. Your journey to fluency starts with SignFlow.</p>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="#features" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-1 -mx-1">Features</a></li>
+                    <li><a href="#how" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-1 -mx-1">How It Works</a></li>
+                    <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-1 -mx-1">Pricing</a></li>
+                    <li><a href="#faq" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-1 -mx-1">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Legal</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-1 -mx-1">Privacy Policy</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-1 -mx-1">Terms of Service</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded px-1 -mx-1">Accessibility Statement</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Connect</h3>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-full p-2" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.988H7.166V12h3.272V9.358c0-3.235 1.944-5.015 4.84-5.015 1.432 0 2.686.107 3.053.155v3.344l-1.989.001c-1.565 0-1.875.744-1.875 1.838V12h4.43l-.715 3.109h-3.715v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-full p-2" aria-label="Twitter">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.73 1.05C18.23 3.97 17.18 3.5 16 3.5c-2.38 0-4.32 1.94-4.32 4.32 0 .34.04.67.11.98-3.6-.18-6.7-1.9-8.81-4.54-.37.63-.58 1.37-.58 2.15 0 1.5.76 2.82 1.92 3.6c-.7-.02-1.37-.21-1.95-.5v.05c0 2.08 1.48 3.82 3.44 4.22-.36.1-.73.15-1.12.15-.27 0-.53-.03-.79-.08.55 1.7 2.14 2.94 4.02 2.97-1.47 1.15-3.32 1.84-5.32 1.84-.35 0-.69-.02-1.03-.06 1.9 1.22 4.15 1.92 6.6 1.92 7.92 0 12.27-6.57 12.27-12.27 0-.19-.01-.38-.01-.56.84-.6 1.56-1.35 2.14-2.21z"/></svg>
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-full p-2" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.564c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.662H9.279V9.167h3.419v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.733a2.383 2.383 0 01-2.384-2.385 2.383 2.383 0 012.384-2.383c1.319 0 2.383 1.064 2.383 2.383s-1.064 2.385-2.383 2.385zM7.288 20.452H3.32V9.167h3.968v11.285z"/></svg>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-500">
+            &copy; 2023 SignFlow. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-purple-600 text-white p-3 rounded-full shadow-lg z-40 hidden focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 focus-visible:ring-opacity-50" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        // Use prefers-reduced-motion for smoother experience
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Sticky Navbar & Active Section Highlight (IntersectionObserver)
+        const header = document.querySelector('header');
+        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '-50% 0% -50% 0%', // Highlight when section is roughly in the middle
+            threshold: 0
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const navLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                const mobileNavLink = document.querySelector(`.mobile-nav-link[href="#${entry.target.id}"]`);
+
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    if (navLink) navLink.classList.add('active');
+                    if (mobileNavLink) mobileNavLink.classList.add('active');
+                } else {
+                    if (navLink) navLink.classList.remove('active');
+                    if (mobileNavLink) mobileNavLink.classList.remove('active');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Mobile Menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+        const mobileNavLinks = mobileMenu.querySelectorAll('a');
+        let previouslyFocusedElement = null;
+
+        function openMobileMenu() {
+            previouslyFocusedElement = document.activeElement;
+            mobileMenuOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling body
+            mobileMenuButton.setAttribute('aria-expanded', 'true');
+
+            // Focus trap
+            const focusableElements = mobileMenu.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstFocusableElement = focusableElements[0];
+            const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+            if (firstFocusableElement) {
+                setTimeout(() => firstFocusableElement.focus(), 50); // Small delay for transition
+            }
+
+            const trapFocus = (e) => {
+                if (e.key === 'Tab') {
+                    if (e.shiftKey) { // Shift + Tab
+                        if (document.activeElement === firstFocusableElement) {
+                            lastFocusableElement.focus();
+                            e.preventDefault();
+                        }
+                    } else { // Tab
+                        if (document.activeElement === lastFocusableElement) {
+                            firstFocusableElement.focus();
+                            e.preventDefault();
+                        }
+                    }
+                }
+            };
+
+            mobileMenu.addEventListener('keydown', trapFocus);
+            // Store the listener to remove it later
+            mobileMenu.dataset.trapFocusListener = trapFocus;
+        }
+
+        function closeMobileMenu() {
+            mobileMenuOverlay.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore body scrolling
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            if (previouslyFocusedElement) {
+                previouslyFocusedElement.focus(); // Restore focus
+            }
+
+            // Remove focus trap listener
+            const trapFocusListener = mobileMenu.dataset.trapFocusListener;
+            if (trapFocusListener) {
+                mobileMenu.removeEventListener('keydown', trapFocusListener);
+                delete mobileMenu.dataset.trapFocusListener;
+            }
+        }
+
+        mobileMenuButton.addEventListener('click', openMobileMenu);
+        mobileMenuCloseButton.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileMenuOverlay) { // Close only if clicked on overlay, not the menu itself
+                closeMobileMenu();
+            }
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+
+        // Close on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mobileMenuOverlay.classList.contains('hidden')) {
+                closeMobileMenu();
+            }
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const button = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            const icon = button.querySelector('svg');
+
+            button.addEventListener('click', () => {
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                // Toggle current FAQ item
+                button.setAttribute('aria-expanded', !isExpanded);
+                icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+
+                if (!prefersReducedMotion) {
+                    if (isExpanded) {
+                        answer.style.maxHeight = '0';
+                        answer.classList.remove('active'); // Remove padding
+                    } else {
+                        answer.classList.add('active'); // Add padding first
+                        // Temporarily set max-height to 'none' to get full scrollHeight
+                        answer.style.maxHeight = 'none';
+                        const scrollHeight = answer.scrollHeight;
+                        answer.style.maxHeight = '0'; // Reset to 0 for transition start
+                        // Trigger reflow before setting final max-height
+                        requestAnimationFrame(() => {
+                            answer.style.maxHeight = `${scrollHeight}px`;
+                        });
+                    }
+                } else {
+                    // For reduced motion, just toggle classes instantly
+                    answer.classList.toggle('active', !isExpanded);
+                    if (isExpanded) {
+                        answer.style.maxHeight = '0';
+                    } else {
+                        answer.style.maxHeight = 'none';
+                    }
+                }
+            });
+
+            // Handle initial state for reduced motion if JS applied classes don't work
+            if (prefersReducedMotion) {
+                if (button.getAttribute('aria-expanded') === 'false') {
+                    answer.style.maxHeight = '0';
+                    answer.style.paddingTop = '0';
+                    answer.style.paddingBottom = '0';
+                }
+            }
+        });
+
+
+        // Pricing Toggle
+        const monthlyToggle = document.getElementById('monthly-toggle');
+        const annualToggle = document.getElementById('annual-toggle');
+        const pricingToggleSlider = document.getElementById('pricing-toggle-slider');
+        const priceValues = document.querySelectorAll('.price-value');
+
+        function updatePricing(isAnnual) {
+            priceValues.forEach(span => {
+                const monthlyPrice = span.dataset.monthly;
+                const annualPrice = span.dataset.annual;
+                span.textContent = isAnnual ? annualPrice : monthlyPrice;
+            });
+
+            if (isAnnual) {
+                monthlyToggle.classList.remove('bg-purple-600', 'text-white');
+                monthlyToggle.classList.add('text-gray-700', 'hover:bg-gray-100');
+                monthlyToggle.setAttribute('aria-pressed', 'false');
+
+                annualToggle.classList.add('bg-purple-600', 'text-white');
+                annualToggle.classList.remove('text-gray-700', 'hover:bg-gray-100');
+                annualToggle.setAttribute('aria-pressed', 'true');
+
+                pricingToggleSlider.style.transform = 'translateX(100%)';
+            } else {
+                annualToggle.classList.remove('bg-purple-600', 'text-white');
+                annualToggle.classList.add('text-gray-700', 'hover:bg-gray-100');
+                annualToggle.setAttribute('aria-pressed', 'false');
+
+                monthlyToggle.classList.add('bg-purple-600', 'text-white');
+                monthlyToggle.classList.remove('text-gray-700', 'hover:bg-gray-100');
+                monthlyToggle.setAttribute('aria-pressed', 'true');
+
+                pricingToggleSlider.style.transform = 'translateX(0)';
+            }
+        }
+
+        monthlyToggle.addEventListener('click', () => updatePricing(false));
+        annualToggle.addEventListener('click', () => updatePricing(true));
+
+        // Initial pricing setup
+        updatePricing(false); // Default to monthly
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+                backToTopButton.classList.remove('hidden');
+            } else {
+                backToTopButton.classList.add('hidden');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
+            });
+        });
+
+        // Contact Form Validation
+        const contactForm = document.getElementById('contact-form');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+        const nameError = document.getElementById('name-error');
+        const emailError = document.getElementById('email-error');
+        const messageError = document.getElementById('message-error');
+        const formSuccessMessage = document.getElementById('form-success-message');
+
+        function validateEmail(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function showValidationError(inputElement, errorElement, message) {
+            errorElement.textContent = message;
+            errorElement.classList.remove('hidden');
+            inputElement.classList.add('border-red-500');
+            inputElement.setAttribute('aria-invalid', 'true');
+        }
+
+        function hideValidationError(inputElement, errorElement) {
+            errorElement.classList.add('hidden');
+            inputElement.classList.remove('border-red-500');
+            inputElement.setAttribute('aria-invalid', 'false');
+        }
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Name validation
+            if (nameInput.value.trim() === '') {
+                showValidationError(nameInput, nameError, 'Name is required.');
+                isValid = false;
+            } else {
+                hideValidationError(nameInput, nameError);
+            }
+
+            // Email validation
+            if (emailInput.value.trim() === '') {
+                showValidationError(emailInput, emailError, 'Email is required.');
+                isValid = false;
+            } else if (!validateEmail(emailInput.value.trim())) {
+                showValidationError(emailInput, emailError, 'Please enter a valid email address.');
+                isValid = false;
+            } else {
+                hideValidationError(emailInput, emailError);
+            }
+
+            // Message validation
+            if (messageInput.value.trim() === '') {
+                showValidationError(messageInput, messageError, 'Message is required.');
+                isValid = false;
+            } else {
+                hideValidationError(messageInput, messageError);
+            }
+
+            if (isValid) {
+                // Simulate form submission
+                console.log('Form submitted:', {
+                    name: nameInput.value,
+                    email: emailInput.value,
+                    message: messageInput.value
+                });
+
+                // Display success message
+                formSuccessMessage.classList.remove('hidden');
+                contactForm.reset(); // Clear the form
+
+                // Hide success message after a few seconds
+                setTimeout(() => {
+                    formSuccessMessage.classList.add('hidden');
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
+```

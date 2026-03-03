@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilates Studio - Strength, Flexibility, Serenity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for minor adjustments not easily done with Tailwind */
+        html {
+            scroll-padding-top: 5rem; /* Space for fixed header */
+        }
+        .scroll-to-top {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .faq-answer.open {
+            max-height: 500px; /* Arbitrary large value to ensure content fits */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .reduce-motion .faq-answer {
+            transition: none !important;
+        }
+        .reduce-motion .scroll-to-top {
+            transition: none !important;
+        }
+        .reduce-motion .mobile-menu {
+            transition: none !important;
+        }
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        /* Style for active navigation link */
+        .nav-link.active {
+            @apply text-indigo-700 font-semibold; /* Tailwind classes for active state */
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-gray-50 antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="#home" class="text-2xl font-bold text-indigo-600 tracking-tight">Pilates<span class="text-teal-500">Pro</span></a>
+            
+            <!-- Desktop Navigation -->
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="#home" class="nav-link text-gray-600 hover:text-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Home</a></li>
+                <li><a href="#features" class="nav-link text-gray-600 hover:text-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Features</a></li>
+                <li><a href="#how" class="nav-link text-gray-600 hover:text-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">How It Works</a></li>
+                <li><a href="#pricing" class="nav-link text-gray-600 hover:text-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Pricing</a></li>
+                <li><a href="#testimonials" class="nav-link text-gray-600 hover:text-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Testimonials</a></li>
+                <li><a href="#faq" class="nav-link text-gray-600 hover:text-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">FAQ</a></li>
+                <li><a href="#contact" class="nav-link text-gray-600 hover:text-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Contact</a></li>
+            </ul>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-label="Open mobile menu" aria-controls="mobile-menu" aria-expanded="false">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu (initially hidden/off-screen) -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white shadow-lg p-6 md:hidden z-50 overflow-y-auto">
+            <div class="flex justify-end mb-8">
+                <button id="mobile-menu-close" class="p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-label="Close mobile menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <ul class="flex flex-col space-y-4">
+                <li><a href="#home" class="mobile-nav-link block px-3 py-2 text-lg text-gray-800 hover:bg-indigo-50 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Home</a></li>
+                <li><a href="#features" class="mobile-nav-link block px-3 py-2 text-lg text-gray-800 hover:bg-indigo-50 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Features</a></li>
+                <li><a href="#how" class="mobile-nav-link block px-3 py-2 text-lg text-gray-800 hover:bg-indigo-50 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">How It Works</a></li>
+                <li><a href="#pricing" class="mobile-nav-link block px-3 py-2 text-lg text-gray-800 hover:bg-indigo-50 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Pricing</a></li>
+                <li><a href="#testimonials" class="mobile-nav-link block px-3 py-2 text-lg text-gray-800 hover:bg-indigo-50 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Testimonials</a></li>
+                <li><a href="#faq" class="mobile-nav-link block px-3 py-2 text-lg text-gray-800 hover:bg-indigo-50 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">FAQ</a></li>
+                <li><a href="#contact" class="mobile-nav-link block px-3 py-2 text-lg text-gray-800 hover:bg-indigo-50 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative bg-gradient-to-br from-teal-50 to-indigo-100 py-20 md:py-32 flex items-center min-h-screen-minus-header overflow-hidden">
+            <div class="absolute inset-0 bg-pattern opacity-10"></div>
+            <div class="container mx-auto px-4 text-center relative z-10">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-indigo-800 leading-tight mb-6 animate-fade-in-up">
+                    Transform Your Body & Mind with Pilates
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                    Discover strength, flexibility, and serenity through expert-led classes, private training, and convenient online sessions.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#pricing" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Book a Class
+                    </a>
+                    <a href="#features" class="inline-flex items-center justify-center px-8 py-3 border border-indigo-600 text-base font-medium rounded-full text-indigo-600 bg-white hover:bg-indigo-50 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Explore Our Offerings
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof Strip -->
+        <section class="bg-white py-12">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-xl font-semibold text-gray-500 mb-8">Trusted by wellness enthusiasts and professionals alike</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-items-center opacity-75">
+                    <span class="text-gray-400 text-3xl font-bold">Health<span class="text-teal-400">Hub</span></span>
+                    <span class="text-gray-400 text-3xl font-bold">Wellness<span class="text-purple-400">Co</span></span>
+                    <span class="text-gray-400 text-3xl font-bold">Fit<span class="text-indigo-400">Life</span></span>
+                    <span class="text-gray-400 text-3xl font-bold">Mind<span class="text-green-400">Body</span></span>
+                    <span class="text-gray-400 text-3xl font-bold hidden lg:block">Peak<span class="text-orange-400">Move</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-16 md:py-24 bg-teal-50">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-indigo-800 mb-4">Why Choose PilatesPro?</h2>
+                <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
+                    Experience a holistic approach to fitness designed to improve your well-being.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1: Core Strength -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out flex flex-col items-center text-center">
+                        <div class="bg-indigo-100 text-indigo-600 rounded-full p-4 mb-6">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Build Core Strength</h3>
+                        <p class="text-gray-600">
+                            Strengthen your core muscles for improved posture, stability, and reduced back pain.
+                        </p>
+                    </div>
+                    <!-- Feature 2: Increased Flexibility -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out flex flex-col items-center text-center">
+                        <div class="bg-teal-100 text-teal-600 rounded-full p-4 mb-6">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7a4 4 0 00-4-4h-4a4 4 0 00-4 4v3.5l-2 1v1.5a4 4 0 004 4h4a4 4 0 004-4v-1.5l-2-1V7z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Enhance Flexibility</h3>
+                        <p class="text-gray-600">
+                            Lengthen muscles and increase range of motion, making everyday movements easier and more fluid.
+                        </p>
+                    </div>
+                    <!-- Feature 3: Mind-Body Connection -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out flex flex-col items-center text-center">
+                        <div class="bg-purple-100 text-purple-600 rounded-full p-4 mb-6">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.747 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Improve Mind-Body</h3>
+                        <p class="text-gray-600">
+                            Cultivate focus and awareness through controlled movements, reducing stress and enhancing mental clarity.
+                        </p>
+                    </div>
+                    <!-- Feature 4: Expert Instructors -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out flex flex-col items-center text-center">
+                        <div class="bg-orange-100 text-orange-600 rounded-full p-4 mb-6">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Expert Guidance</h3>
+                        <p class="text-gray-600">
+                            Learn from certified and experienced instructors dedicated to your personal progress and safety.
+                        </p>
+                    </div>
+                    <!-- Feature 5: Variety of Classes -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out flex flex-col items-center text-center">
+                        <div class="bg-blue-100 text-blue-600 rounded-full p-4 mb-6">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Diverse Class Offerings</h3>
+                        <p class="text-gray-600">
+                            From mat to reformer, group classes to private sessions, find the perfect fit for your goals.
+                        </p>
+                    </div>
+                    <!-- Feature 6: Community & Support -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out flex flex-col items-center text-center">
+                        <div class="bg-green-100 text-green-600 rounded-full p-4 mb-6">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h2a2 2 0 002-2V7a2 2 0 00-2-2h-2m-4 13V4a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2m4 0v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5m4 0h.01"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Supportive Community</h3>
+                        <p class="text-gray-600">
+                            Join a welcoming community focused on health, progress, and mutual encouragement.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-indigo-800 mb-4">How It Works</h2>
+                <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
+                    Starting your Pilates journey with us is simple and rewarding.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center group">
+                        <div class="relative mb-6">
+                            <div class="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-3xl font-bold border-4 border-indigo-200 group-hover:scale-110 transition duration-300">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </div>
+                            <span class="absolute top-0 right-0 -mr-4 -mt-4 bg-indigo-600 text-white text-sm font-semibold px-3 py-1 rounded-full">1</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Choose Your Path</h3>
+                        <p class="text-gray-600">
+                            Select from group classes, private sessions, or our convenient online programs.
+                        </p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center group">
+                        <div class="relative mb-6">
+                            <div class="w-20 h-20 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 text-3xl font-bold border-4 border-teal-200 group-hover:scale-110 transition duration-300">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M7 16h.01M17 16h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <span class="absolute top-0 right-0 -mr-4 -mt-4 bg-teal-600 text-white text-sm font-semibold px-3 py-1 rounded-full">2</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Book & Attend</h3>
+                        <p class="text-gray-600">
+                            Easily schedule your sessions online or through our app, then join us in studio or virtually.
+                        </p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center group">
+                        <div class="relative mb-6">
+                            <div class="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-3xl font-bold border-4 border-purple-200 group-hover:scale-110 transition duration-300">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <span class="absolute top-0 right-0 -mr-4 -mt-4 bg-purple-600 text-white text-sm font-semibold px-3 py-1 rounded-full">3</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Achieve Your Goals</h3>
+                        <p class="text-gray-600">
+                            Experience increased strength, flexibility, and overall well-being with consistent practice.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-indigo-800 mb-4">Flexible Pricing Plans</h2>
+                <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Find the perfect plan to fit your lifestyle and fitness aspirations.
+                </p>
+
+                <!-- Pricing Toggle -->
+                <div class="inline-flex rounded-full bg-white p-1 shadow-inner mb-12" role="radiogroup" aria-label="Pricing duration toggle">
+                    <button type="button" id="toggle-monthly" class="px-6 py-2 rounded-full text-sm font-medium text-gray-700 bg-indigo-500 text-white shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-300" aria-pressed="true">
+                        Monthly
+                    </button>
+                    <button type="button" id="toggle-annual" class="px-6 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-300" aria-pressed="false">
+                        Annual <span class="text-green-600 font-semibold">(Save 10%)</span>
+                    </button>
+                </div>
+
+                <!-- Pricing Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <!-- Basic Plan -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Introductory</h3>
+                            <p class="text-gray-600 mb-6">Perfect for beginners to try it out.</p>
+                            <div class="text-4xl font-extrabold text-indigo-600 mb-2">
+                                $<span class="price-value" data-monthly="[ADD PRICE-1]" data-annual="[ADD PRICE-A]">ADD PRICE-1</span><span class="text-lg font-medium text-gray-500">/month</span>
+                            </div>
+                            <ul class="text-left text-gray-700 space-y-3 mb-8">
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    2 Group Classes
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Access to Online Library
+                                </li>
+                                <li class="flex items-center text-gray-400">
+                                    <svg class="w-5 h-5 text-gray-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                    Private Session Discount
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="block w-full text-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Start Trial
+                        </a>
+                    </div>
+
+                    <!-- Standard Plan (Most Popular) -->
+                    <div class="bg-white p-8 rounded-xl shadow-2xl border-2 border-indigo-600 scale-105 relative z-10 flex flex-col justify-between">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-indigo-600 text-white text-xs font-semibold rounded-full tracking-wide">
+                            Most Popular
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Standard</h3>
+                            <p class="text-gray-600 mb-6">For consistent practice and steady progress.</p>
+                            <div class="text-5xl font-extrabold text-indigo-700 mb-2">
+                                $<span class="price-value" data-monthly="[ADD PRICE-2]" data-annual="[ADD PRICE-B]">ADD PRICE-2</span><span class="text-lg font-medium text-gray-500">/month</span>
+                            </div>
+                            <ul class="text-left text-gray-700 space-y-3 mb-8">
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Unlimited Group Classes
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Full Online Library Access
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    10% Off Private Sessions
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="block w-full text-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Get Started
+                        </a>
+                    </div>
+
+                    <!-- Premium Plan -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Premium</h3>
+                            <p class="text-gray-600 mb-6">For personalized attention and accelerated results.</p>
+                            <div class="text-4xl font-extrabold text-indigo-600 mb-2">
+                                $<span class="price-value" data-monthly="[ADD PRICE-3]" data-annual="[ADD PRICE-C]">ADD PRICE-3</span><span class="text-lg font-medium text-gray-500">/month</span>
+                            </div>
+                            <ul class="text-left text-gray-700 space-y-3 mb-8">
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Unlimited Group Classes
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Full Online Library Access
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    2 Private Sessions/Month
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Personalized Program
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="block w-full text-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Go Premium
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-16 md:py-24 bg-teal-50">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-indigo-800 mb-4">What Our Clients Say</h2>
+                <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
+                    Hear from our community about their transformative Pilates experiences.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center">
+                        <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center mb-6 overflow-hidden">
+                            <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                        </div>
+                        <p class="text-xl italic text-gray-700 mb-6">
+                            "PilatesPro has truly transformed my strength and flexibility. The instructors are incredibly knowledgeable and supportive. I feel stronger and more balanced than ever!"
+                        </p>
+                        <p class="font-semibold text-gray-900">- Sarah J.</p>
+                        <p class="text-sm text-gray-500">Dedicated Member</p>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center">
+                        <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center mb-6 overflow-hidden">
+                            <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                        </div>
+                        <p class="text-xl italic text-gray-700 mb-6">
+                            "I've tried many fitness programs, but PilatesPro stands out. The online classes are fantastic, fitting perfectly into my busy schedule, and I've seen amazing results."
+                        </p>
+                        <p class="font-semibold text-gray-900">- Michael D.</p>
+                        <p class="text-sm text-gray-500">Online Subscriber</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-indigo-800 text-center mb-12">Frequently Asked Questions</h2>
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <h2 class="text-xl font-semibold">
+                            <button class="faq-toggle flex justify-between items-center w-full p-6 text-left text-gray-800 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-t-xl" aria-expanded="false" aria-controls="faq-answer-1">
+                                What is Pilates?
+                                <svg class="w-5 h-5 faq-icon transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                        </h2>
+                        <div id="faq-answer-1" class="faq-answer text-gray-600 px-6 py-0 bg-white">
+                            <p>Pilates is a full-body exercise method that focuses on strengthening the core, improving flexibility, balance, and coordination. It emphasizes precise movements and controlled breathing to engage both mind and body.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <h2 class="text-xl font-semibold">
+                            <button class="faq-toggle flex justify-between items-center w-full p-6 text-left text-gray-800 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false" aria-controls="faq-answer-2">
+                                Is Pilates suitable for beginners?
+                                <svg class="w-5 h-5 faq-icon transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                        </h2>
+                        <div id="faq-answer-2" class="faq-answer text-gray-600 px-6 py-0 bg-white">
+                            <p>Absolutely! Pilates is highly adaptable and can be modified for all fitness levels, including complete beginners. Our instructors provide personalized guidance to ensure proper form and technique.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <h2 class="text-xl font-semibold">
+                            <button class="faq-toggle flex justify-between items-center w-full p-6 text-left text-gray-800 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false" aria-controls="faq-answer-3">
+                                What should I wear and bring to a class?
+                                <svg class="w-5 h-5 faq-icon transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                        </h2>
+                        <div id="faq-answer-3" class="faq-answer text-gray-600 px-6 py-0 bg-white">
+                            <p>Wear comfortable athletic clothing that allows for a full range of motion. For mat classes, you might want to bring a water bottle. Grip socks are recommended for reformer classes. All necessary equipment is provided.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                        <h2 class="text-xl font-semibold">
+                            <button class="faq-toggle flex justify-between items-center w-full p-6 text-left text-gray-800 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false" aria-controls="faq-answer-4">
+                                Do you offer online classes?
+                                <svg class="w-5 h-5 faq-icon transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                        </h2>
+                        <div id="faq-answer-4" class="faq-answer text-gray-600 px-6 py-0 bg-white">
+                            <p>Yes, we offer a comprehensive online platform with live-streamed classes and an extensive library of on-demand sessions, allowing you to practice Pilates from the comfort of your home.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24 bg-gradient-to-br from-indigo-50 to-teal-100">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-indigo-800 mb-4">Get In Touch</h2>
+                <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
+                    Have questions or ready to start your Pilates journey? Reach out to us!
+                </p>
+
+                <div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 text-left mb-1">Name</label>
+                            <input type="text" id="name" name="name" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required aria-required="true" aria-invalid="false">
+                            <p class="text-red-600 text-sm mt-1 text-left hidden" id="name-error">Name is required.</p>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 text-left mb-1">Email</label>
+                            <input type="email" id="email" name="email" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required aria-required="true" aria-invalid="false">
+                            <p class="text-red-600 text-sm mt-1 text-left hidden" id="email-error">Please enter a valid email address.</p>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 text-left mb-1">Message</label>
+                            <textarea id="message" name="message" rows="5" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required aria-required="true" aria-invalid="false"></textarea>
+                            <p class="text-red-600 text-sm mt-1 text-left hidden" id="message-error">Message is required.</p>
+                        </div>
+                        <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 ease-in-out">
+                            Send Message
+                        </button>
+                    </form>
+                    <div id="contact-success" class="mt-6 p-4 bg-green-100 text-green-700 rounded-md border border-green-200 hidden" role="alert" aria-live="polite">
+                        <div class="flex items-center justify-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <p class="font-medium">Thank you for your message! We'll get back to you shortly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-8">
+                <a href="#home" class="text-3xl font-bold text-white tracking-tight">Pilates<span class="text-teal-400">Pro</span></a>
+            </div>
+            <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-8">
+                <a href="#home" class="text-gray-400 hover:text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Home</a>
+                <a href="#features" class="text-gray-400 hover:text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Features</a>
+                <a href="#pricing" class="text-gray-400 hover:text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Pricing</a>
+                <a href="#contact" class="text-gray-400 hover:text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">Contact</a>
+            </div>
+            <p class="text-gray-500 text-sm">&copy; 2023 PilatesPro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="scroll-to-top fixed bottom-6 right-6 p-4 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 opacity-0 pointer-events-none transition-opacity duration-300" aria-label="Scroll to top">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+
+    <!-- Embedded Vanilla JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // --- Mobile Menu ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuCloseButton = document.getElementById('mobile-menu-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileNavLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
+            let previouslyFocusedElement = null;
+
+            function openMobileMenu() {
+                previouslyFocusedElement = document.activeElement;
+                mobileMenu.classList.add('open');
+                mobileMenu.setAttribute('aria-expanded', 'true');
+                document.body.classList.add('overflow-hidden'); // Prevent body scroll
+                mobileMenuCloseButton.focus(); // Focus on close button when opened
+                trapFocus(mobileMenu);
+            }
+
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('open');
+                mobileMenu.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('overflow-hidden');
+                if (previouslyFocusedElement) {
+                    previouslyFocusedElement.focus(); // Return focus to the element that opened the menu
+                }
+                releaseFocus(mobileMenu);
+            }
+
+            mobileMenuButton.addEventListener('click', openMobileMenu);
+            mobileMenuCloseButton.addEventListener('click', closeMobileMenu);
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // Close mobile menu on ESC key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && mobileMenu.classList.contains('open')) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Focus trap for mobile menu
+            function trapFocus(element) {
+                const focusableEls = element.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
+                const firstFocusableEl = focusableEls[0];
+                const lastFocusableEl = focusableEls[focusableEls.length - 1];
+
+                element.addEventListener('keydown', function(e) {
+                    const isTabPressed = (e.key === 'Tab');
+                    if (!isTabPressed) {
+                        return;
+                    }
+
+                    if (e.shiftKey) { // if shift key pressed for shift + tab
+                        if (document.activeElement === firstFocusableEl) {
+                            lastFocusableEl.focus(); // add focus to the last focusable element
+                            e.preventDefault();
+                        }
+                    } else { // if tab key is pressed
+                        if (document.activeElement === lastFocusableEl) {
+                            firstFocusableEl.focus(); // add focus to the first focusable element
+                            e.preventDefault();
+                        }
+                    }
+                });
+            }
+
+            function releaseFocus(element) {
+                // No specific action needed here other than allowing focus to move freely again
+                // The keydown listener is tied to the menu being open, so it naturally stops
+            }
+
+
+            // --- Sticky Navbar & Active Section Highlight (IntersectionObserver) ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section[id]');
+
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '-50% 0px -49% 0px', // When 50% of the section is visible in the middle
+                threshold: 0 // No threshold needed with rootMargin
+            };
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Remove 'active' from all links
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        mobileNavLinks.forEach(link => link.classList.remove('active'));
+                        
+                        // Add 'active' to the corresponding link
+                        const activeNavLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                        if (activeNavLink) {
+                            activeNavLink.classList.add('active');
+                        }
+                        const activeMobileNavLink = document.querySelector(`.mobile-nav-link[href="#${entry.target.id}"]`);
+                        if (activeMobileNavLink) {
+                            activeMobileNavLink.classList.add('active');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+
+            // --- FAQ Accordion ---
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const answer = document.getElementById(toggle.getAttribute('aria-controls'));
+                    const icon = toggle.querySelector('.faq-icon');
+                    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+
+                    if (isExpanded) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                        if (!prefersReducedMotion) {
+                            answer.style.maxHeight = '0';
+                        }
+                        answer.classList.remove('open');
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        // Close all other open answers
+                        faqToggles.forEach(otherToggle => {
+                            if (otherToggle !== toggle && otherToggle.getAttribute('aria-expanded') === 'true') {
+                                const otherAnswer = document.getElementById(otherToggle.getAttribute('aria-controls'));
+                                const otherIcon = otherToggle.querySelector('.faq-icon');
+                                otherToggle.setAttribute('aria-expanded', 'false');
+                                if (!prefersReducedMotion) {
+                                    otherAnswer.style.maxHeight = '0';
+                                }
+                                otherAnswer.classList.remove('open');
+                                otherIcon.style.transform = 'rotate(0deg)';
+                            }
+                        });
+
+                        toggle.setAttribute('aria-expanded', 'true');
+                        if (!prefersReducedMotion) {
+                            // Set a temporary max-height to trigger transition, then set to scrollHeight
+                            answer.style.maxHeight = '500px'; // Initial large value
+                            // Use requestAnimationFrame to ensure reflow before setting to scrollHeight
+                            requestAnimationFrame(() => {
+                                answer.style.maxHeight = answer.scrollHeight + 'px';
+                            });
+                        }
+                        answer.classList.add('open');
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+
+            // --- Pricing Toggle (Monthly/Annual) ---
+            const toggleMonthly = document.getElementById('toggle-monthly');
+            const toggleAnnual = document.getElementById('toggle-annual');
+            const priceValues = document.querySelectorAll('.price-value');
+            const durationTexts = document.querySelectorAll('.price-value + span');
+
+            function updatePrices(isAnnual) {
+                priceValues.forEach(priceSpan => {
+                    priceSpan.textContent = isAnnual ? priceSpan.dataset.annual : priceSpan.dataset.monthly;
+                });
+                durationTexts.forEach(durationSpan => {
+                    durationSpan.textContent = isAnnual ? '/year' : '/month';
+                });
+
+                if (isAnnual) {
+                    toggleAnnual.classList.add('bg-indigo-500', 'text-white', 'shadow-md');
+                    toggleAnnual.classList.remove('hover:bg-gray-50');
+                    toggleAnnual.setAttribute('aria-pressed', 'true');
+                    toggleMonthly.classList.remove('bg-indigo-500', 'text-white', 'shadow-md');
+                    toggleMonthly.classList.add('hover:bg-gray-50');
+                    toggleMonthly.setAttribute('aria-pressed', 'false');
+                } else {
+                    toggleMonthly.classList.add('bg-indigo-500', 'text-white', 'shadow-md');
+                    toggleMonthly.classList.remove('hover:bg-gray-50');
+                    toggleMonthly.setAttribute('aria-pressed', 'true');
+                    toggleAnnual.classList.remove('bg-indigo-500', 'text-white', 'shadow-md');
+                    toggleAnnual.classList.add('hover:bg-gray-50');
+                    toggleAnnual.setAttribute('aria-pressed', 'false');
+                }
+            }
+
+            // Initial price placeholders (replace with actual numbers for demo)
+            priceValues.forEach(priceSpan => {
+                priceSpan.dataset.monthly = priceSpan.textContent; // Store initial as monthly
+                // Calculate annual price (e.g., 10% discount)
+                let monthlyPrice = parseFloat(priceSpan.dataset.monthly.replace(/[^0-9.]/g, ''));
+                if (!isNaN(monthlyPrice)) {
+                    priceSpan.dataset.annual = Math.round((monthlyPrice * 12 * 0.9)); // 10% off for annual
+                } else {
+                    priceSpan.dataset.annual = priceSpan.dataset.monthly; // fallback for non-numeric
+                }
+            });
+
+            // Set some demo prices
+            document.querySelector('.price-value[data-monthly="[ADD PRICE-1]"]').dataset.monthly = '59';
+            document.querySelector('.price-value[data-monthly="[ADD PRICE-2]"]').dataset.monthly = '99';
+            document.querySelector('.price-value[data-monthly="[ADD PRICE-3]"]').dataset.monthly = '199';
+
+            // Recalculate annual based on these new values
+            priceValues.forEach(priceSpan => {
+                let monthlyPrice = parseFloat(priceSpan.dataset.monthly);
+                if (!isNaN(monthlyPrice)) {
+                    priceSpan.dataset.annual = Math.round(monthlyPrice * 12 * 0.9);
+                }
+            });
+
+            // Update initial display
+            updatePrices(false);
+
+            toggleMonthly.addEventListener('click', () => updatePrices(false));
+            toggleAnnual.addEventListener('click', () => updatePrices(true));
+
+
+            // --- "Back to top" button ---
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) { // Show button after scrolling 300px
+                    backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
+                    backToTopButton.classList.add('opacity-100', 'pointer-events-auto');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'pointer-events-auto');
+                    backToTopButton.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: prefersReducedMotion ? 'auto' : 'smooth'
+                });
+            });
+
+
+            // --- Contact Form Validation ---
+            const contactForm = document.getElementById('contact-form');
+            const contactSuccessMessage = document.getElementById('contact-success');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+
+            function showError(input, message) {
+                const errorElement = document.getElementById(`${input.id}-error`);
+                input.classList.add('border-red-500');
+                input.setAttribute('aria-invalid', 'true');
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.classList.remove('hidden');
+                }
+            }
+
+            function clearError(input) {
+                const errorElement = document.getElementById(`${input.id}-error`);
+                input.classList.remove('border-red-500');
+                input.setAttribute('aria-invalid', 'false');
+                if (errorElement) {
+                    errorElement.classList.add('hidden');
+                }
+            }
+
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(String(email).toLowerCase());
+            }
+
+            contactForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent actual form submission
+
+                let isValid = true;
+
+                // Validate Name
+                if (nameInput.value.trim() === '') {
+                    showError(nameInput, 'Name is required.');
+                    isValid = false;
+                } else {
+                    clearError(nameInput);
+                }
+
+                // Validate Email
+                if (emailInput.value.trim() === '') {
+                    showError(emailInput, 'Email is required.');
+                    isValid = false;
+                } else if (!validateEmail(emailInput.value)) {
+                    showError(emailInput, 'Please enter a valid email address.');
+                    isValid = false;
+                } else {
+                    clearError(emailInput);
+                }
+
+                // Validate Message
+                if (messageInput.value.trim() === '') {
+                    showError(messageInput, 'Message is required.');
+                    isValid = false;
+                } else {
+                    clearError(messageInput);
+                }
+
+                if (isValid) {
+                    // Simulate successful submission
+                    contactForm.reset();
+                    contactSuccessMessage.classList.remove('hidden');
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        contactSuccessMessage.classList.add('hidden');
+                    }, 5000);
+                }
+            });
+
+            // Real-time validation for inputs
+            nameInput.addEventListener('input', () => {
+                if (nameInput.value.trim() !== '') clearError(nameInput);
+            });
+            emailInput.addEventListener('input', () => {
+                if (emailInput.value.trim() !== '' && validateEmail(emailInput.value)) clearError(emailInput);
+            });
+            messageInput.addEventListener('input', () => {
+                if (messageInput.value.trim() !== '') clearError(messageInput);
+            });
+
+            // Add reduce-motion class to body if prefers reduced motion
+            if (prefersReducedMotion) {
+                document.body.classList.add('reduce-motion');
+            }
+        });
+    </script>
+</body>
+</html>
